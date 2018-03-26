@@ -14,13 +14,16 @@ defmodule Philosopher do
     def waiting(hunger, right, left, name, ctrl) do
         
         case Chopstick.request({:stick, left}, 200) do
-            :no -> dreaming(hunger, right, left, name, ctrl)
+            :no ->
+            Chopstick.return({:stick, left})
+            dreaming(hunger, right, left, name, ctrl)
             :ok -> 
                 IO.puts("#{name} received a chopstick!")
                 
                 case Chopstick.request({:stick, right}, 200) do
                     :no -> 
                     Chopstick.return({:stick, left})
+                    Chopstick.return({:stick, right})
                     dreaming(hunger, right, left, name ,ctrl)
                     :ok -> 
                         IO.puts("#{name} received a chopstick!")

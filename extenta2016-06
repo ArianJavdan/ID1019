@@ -1,0 +1,38 @@
+defmodule Extenta do 
+
+	def calc([], _) do 0 end
+	def calc(list = [h | t], val) do
+		length = lengthl(list)
+		h * calculate(val, (length - 1)) + calc(t, val)
+	end
+	def lengthl([]) do 0 end
+	def lengthl([h| t]) do 1 + length(t) end 
+	def calculate(_, 0) do 1 end
+	def calculate(val, exp) do
+		val * calculate(val, (exp - 1))
+	end
+
+
+
+
+	def collect() do col([]) end
+	def col(list) do
+		
+		receive do 
+			:done -> list
+			msg -> col(list ++ msg)
+
+		end
+	end
+	def decode(coded, tree) do decode(coded, tree, tree) end
+	def decode([], {:char, char}, _) do [char] end
+	def decode([], _, tree) do "" end
+	def decode(coded, {:char, char}, tree) do [char| decode(coded, tree, tree)] end
+	def decode([h | t], {huf, zero, one}, tree) do
+		case h do
+			1 -> decode(t, one)
+			0 -> decode(t, zero)
+		end
+
+	end
+end

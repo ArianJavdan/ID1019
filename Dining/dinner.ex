@@ -12,6 +12,7 @@ defmodule Dinner do
     end
     def start(), do: spawn(fn -> init() end)
     def init() do
+        Time.utc_now()
         c1 = Chopstick.start()
         c2 = Chopstick.start()
         c3 = Chopstick.start()
